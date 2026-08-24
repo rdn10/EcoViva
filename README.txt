@@ -3,11 +3,6 @@ ECO VIVA — VERSAO COMPLETA
 REQUISITOS
 - Node.js 18 ou superior
 
-INICIAR
-1. Abra o terminal dentro desta pasta.
-2. Execute: npm start
-3. Abra: http://localhost:3000
-
 USUARIO
 - Cadastro e login reais no backend.
 - Perfil, foto, dados pessoais e endereco persistidos.
