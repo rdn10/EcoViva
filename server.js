@@ -220,10 +220,16 @@ function requireAdmin(req,res){
   return admin;
 }
 function publicAdmin(a){return {id:a.id,name:a.name,email:a.email,createdAt:a.createdAt};}
-function setupKey(){
-  if(process.env.ADMIN_SETUP_KEY) return String(process.env.ADMIN_SETUP_KEY);
-  if(!fs.existsSync(ADMIN_SETUP_KEY_FILE)) fs.writeFileSync(ADMIN_SETUP_KEY_FILE, crypto.randomBytes(18).toString('hex'), {mode:0o600});
-  return fs.readFileSync(ADMIN_SETUP_KEY_FILE,'utf8').trim();
+function setupKey() {
+  const key = String(process.env.ADMIN_SETUP_KEY || '').trim();
+
+  if (!key) {
+    throw new Error(
+      'ADMIN_SETUP_KEY não configurada. Configure essa variável no ambiente de produção.'
+    );
+  }
+
+  return key;
 }
 function hasAdmin(){return adminCatalog().admins?.length>0;}
 function adminStats(){
@@ -555,10 +561,22 @@ const server=http.createServer(async (req,res)=>{const url=new URL(req.url,`http
 async function start(){
   const result = await initStorage();
   cleanup();
-  server.listen(PORT,'0.0.0.0',()=>{
+
+  server.listen(PORT, '0.0.0.0', () => {
     console.log(`Eco Viva rodando em http://localhost:${PORT}`);
-    console.log(`Armazenamento: ${result.cloud ? 'PostgreSQL (produção)' : 'arquivos locais (desenvolvimento)'}`);
-    if(!hasAdmin()){console.log(`ADMIN_SETUP_KEY=${setupKey()}`);console.log('Configure o dono em http://localhost:'+PORT+'/admin-setup.html');}
+
+    console.log(
+      `Armazenamento: ${
+        result.cloud
+          ? 'PostgreSQL (produção)'
+          : 'arquivos locais (desenvolvimento)'
+      }`
+    );
+
+    if (!hasAdmin()) {
+      console.log('Nenhum administrador configurado.');
+      console.log('Configure o dono em /admin-setup.html');
+    }
   });
 }
 process.on('SIGTERM', async()=>{await closeStorage();server.close(()=>process.exit(0));});
