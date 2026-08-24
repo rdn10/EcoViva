@@ -9,8 +9,14 @@ const { initStorage, getState, isCloud, markChanged, close: closeStorage } = req
 const ROOT = __dirname;
 const DATA_DIR = path.join(ROOT, 'data');
 const UPLOAD_DIR = path.join(ROOT, 'uploads');
-const ADMIN_SETUP_KEY_FILE = path.join(DATA_DIR, 'admin-setup-key.txt');
-const PORT = Number(process.env.PORT || 3000);
+
+const COUPONS_FILE = path.join(DATA_DIR, 'coupons.json');
+const PARTNERS_FILE = path.join(DATA_DIR, 'partners.json');
+const PRODUCTS_FILE = path.join(DATA_DIR, 'products.json');
+const MATERIAL_FACTORS_FILE = path.join(DATA_DIR, 'material-factors.json');
+const ADMINS_FILE = path.join(DATA_DIR, 'admins.json');
+
+const ADMIN_SETUP_KEY_FILE = path.join(DATA_DIR, 'admin-setup-key.txt');const PORT = Number(process.env.PORT || 3000);
 const SESSION_DAYS = 7;
 
 fs.mkdirSync(DATA_DIR, { recursive: true });
