@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="theme-color" content="#102b1c">
+<title>Eco Viva — Escanear</title>
+<link rel="stylesheet" href="components/escanear.css"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<script src="https://unpkg.com/@zxing/browser@0.2.1"></script>
+<script src="script/app.js" defer></script><script src="script/auth.js" defer></script>
+</head>
+<body><div class="app-wrapper">
+<header class="app-header"><div class="header-inner">
+<a href="index.html" class="page-brand"><span class="page-brand-icon"><i class="fa-solid fa-camera"></i></span><span class="page-brand-text">Escanear</span></a>
+<nav class="header-nav" aria-label="Navegação principal"><a href="index.html" class="header-pill">Visão geral</a><a href="pontuacao.html" class="header-pill">Impacto</a><a href="escanear.html" class="header-pill">Reciclar</a><a href="empresas.html" class="header-pill">Parceiros</a><a href="resgates.html" class="header-pill">Prêmios</a></nav>
+<a href="perfil.html" class="header-profile" data-header-user aria-label="Perfil"><span class="header-user-avatar"><i class="fa-solid fa-user"></i></span></a>
+</div></header>
+<main class="content scan-page">
+<a class="page-back" href="index.html"><i class="fa-solid fa-arrow-left"></i> Voltar para início</a>
+<div class="section-head"><div><div class="kicker">Reciclagem</div><h1 class="page-title">Validar embalagem</h1><p class="page-subtitle">No celular, abra a câmera e leia o código de barras. No computador, digite o código da embalagem. O registro fica salvo na sua conta.</p></div></div>
+<section class="scan-card">
+<div class="scan-tabs"><button class="scan-tab active" type="button" data-mode="camera"><i class="fa-solid fa-camera"></i> Usar câmera</button><button class="scan-tab" type="button" data-mode="code"><i class="fa-solid fa-keyboard"></i> Digitar código</button></div>
+<div class="scan-camera-panel" data-panel="camera">
+<div class="camera-stage"><video id="cameraVideo" playsinline muted autoplay hidden></video><div class="camera-placeholder" id="cameraPlaceholder"><span class="camera-icon"><i class="fa-solid fa-barcode"></i></span><strong>Pronto para escanear</strong><span>Posicione o código de barras dentro da área.</span></div><div class="scan-guide"><span></span></div><div class="camera-status" id="cameraStatus">Câmera desligada</div></div>
+<div class="camera-actions"><button class="btn-primary" id="openCamera" type="button"><i class="fa-solid fa-camera"></i> Abrir câmera</button><button class="btn-secondary" id="stopCamera" type="button" disabled><i class="fa-solid fa-stop"></i> Parar</button><label class="btn-secondary capture-fallback"><i class="fa-solid fa-image"></i> Fotografar código<input id="captureInput" type="file" accept="image/*" capture="environment" hidden></label></div>
+<p class="scan-help" id="cameraHelp">No celular, a câmera traseira será usada. O leitor tenta identificar EAN/GTIN automaticamente.</p>
+</div>
+<div class="scan-code-panel" data-panel="code" hidden><div class="code-entry"><label for="packageCode">CÓDIGO DA EMBALAGEM</label><div class="code-input-row"><input id="packageCode" inputmode="numeric" autocomplete="off" placeholder="Ex.: 7891234567895" maxlength="14"><button class="btn-primary" id="validateCode" type="button"><i class="fa-solid fa-check"></i> Validar código</button></div><p>Digite o número impresso abaixo do código de barras. O servidor confere o dígito verificador antes de registrar.</p></div></div>
+</section>
+<section class="scan-confirm" id="scanConfirm" hidden><div class="product-result" id="productResult" hidden><div class="product-result-image" id="productImage"></div><div class="product-result-info"><span class="kicker">PRODUTO IDENTIFICADO</span><h2 id="productName">Produto</h2><p id="productBrand"></p><span id="productMeta"></span><small id="productSource"></small></div></div><div class="confirm-header"><span class="status-pill"><i class="fa-solid fa-circle-check"></i> Código válido</span><span class="code-badge" id="validatedCode"></span></div><h2>Qual material você encaminhou?</h2><p>Escolha o material real da embalagem para calcular o impacto.</p><div class="material-grid"><button type="button" class="material-option" data-material="plastico"><i class="fa-solid fa-bottle-water"></i><span>Plástico</span><small>Aguardando produto</small></button><button type="button" class="material-option" data-material="papel"><i class="fa-solid fa-box"></i><span>Papel</span><small>Aguardando produto</small></button><button type="button" class="material-option" data-material="vidro"><i class="fa-solid fa-wine-bottle"></i><span>Vidro</span><small>Aguardando produto</small></button><button type="button" class="material-option" data-material="metal"><i class="fa-solid fa-cube"></i><span>Metal</span><small>Aguardando produto</small></button></div><button class="btn-primary confirm-register" id="registerScan" type="button" disabled>Registrar reciclagem</button><p class="scan-feedback" id="productConfigStatus" hidden aria-live="polite"></p><div class="user-product-register" id="userProductRegister" hidden>
+<div class="user-product-head"><span class="kicker">NOVO PRODUTO</span><h3>Cadastre esta embalagem</h3><p>Você encontrou uma embalagem que ainda não está no seu catálogo. Cadastre os dados da embalagem para poder registrá-la na sua conta.</p></div>
+<form id="userProductForm" class="user-product-form">
+<div class="user-product-field"><label for="userProductCode">CÓDIGO EAN/GTIN</label><input id="userProductCode" name="code" readonly></div>
+<div class="user-product-field"><label for="userProductName">NOME DO PRODUTO</label><input id="userProductName" name="name" required placeholder="Nome da embalagem/produto"></div>
+<div class="user-product-field"><label for="userProductBrand">MARCA</label><input id="userProductBrand" name="brand" placeholder="Marca (opcional)"></div>
+<div class="user-product-field"><label for="userProductMaterial">MATERIAL DA EMBALAGEM</label><select id="userProductMaterial" name="material" required><option value="">Selecione...</option><option value="plastico">Plástico</option><option value="papel">Papel</option><option value="vidro">Vidro</option><option value="metal">Metal</option><option value="outro">Outro</option></select></div>
+<div class="user-product-field"><label for="userProductWeight">PESO DA EMBALAGEM (g)</label><input id="userProductWeight" name="weightGrams" type="number" min="0.01" step="0.01" required placeholder="Ex.: 18"></div>
+<div class="user-product-actions"><button class="btn-primary" type="submit" id="saveUserProduct"><i class="fa-solid fa-floppy-disk"></i> Salvar produto na minha conta</button></div>
+<p class="scan-feedback" id="userProductFeedback" aria-live="polite"></p>
+</form></div>
+<p class="scan-feedback" id="scanFeedback" aria-live="polite"></p></section>
+<section class="scan-note"><i class="fa-solid fa-shield-halved"></i><div><strong>Registro individual</strong><p>O código, material, pontos e impacto ficam vinculados à sua conta.</p></div></section>
+</main>
+<footer class="site-footer"><div class="footer-inner"><div class="footer-brand"><a href="index.html" class="footer-logo"><span class="footer-logo-mark"><i class="fa-solid fa-seedling"></i></span><span>eco viva</span></a><p>Pequenas ações. Um planeta melhor.</p></div><div class="footer-links"><div><strong>Explorar</strong><a href="index.html">Visão geral</a><a href="pontuacao.html">Meu impacto</a><a href="escanear.html">Reciclar</a></div><div><strong>Serviços</strong><a href="resgates.html">Prêmios</a><a href="separar-lixo.html">Guia de descarte</a></div><div><strong>Eco Viva</strong><a href="empresas.html">Parceiros</a><a href="perfil.html">Perfil</a></div></div></div><div class="footer-bottom"><span>© 2026 Eco Viva. Todos os direitos reservados.</span><span>Feito para transformar hábitos em impacto.</span></div></footer>
+</div>
+<script src="script/escanear.js" defer></script>
+</body></html>

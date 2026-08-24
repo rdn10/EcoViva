@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#102b1c">
+<title>Eco Viva — Criar conta</title>
+<link rel="stylesheet" href="components/index.css"><link rel="stylesheet" href="components/auth.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<script src="script/app.js" defer></script><script src="script/auth.js" defer></script>
+</head>
+<body><div class="app-wrapper">
+<header class="app-header"><div class="header-inner">
+<a href="index.html" class="page-brand brand-main"><span class="page-brand-icon"><i class="fa-solid fa-seedling"></i></span><span class="page-brand-text">Eco Viva</span></a>
+<nav class="header-nav" aria-label="Navegação principal"><a href="index.html" class="header-pill">Visão geral</a><a href="pontuacao.html" class="header-pill">Impacto</a><a href="escanear.html" class="header-pill">Reciclar</a><a href="empresas.html" class="header-pill">Parceiros</a><a href="resgates.html" class="header-pill">Prêmios</a></nav>
+<a href="perfil.html" class="header-profile" data-header-user aria-label="Perfil"><span class="header-user-avatar"><i class="fa-solid fa-user"></i></span></a>
+</div></header>
+
+<main class="content auth-page">
+<section class="auth-layout">
+<div class="auth-showcase">
+<div><div class="auth-mark"><i class="fa-solid fa-leaf"></i></div></div>
+<div><div class="kicker">Faça parte</div><h1>Um hábito hoje. Um impacto amanhã.</h1><p>Crie sua conta para registrar ações sustentáveis, ganhar pontos e acompanhar sua evolução.</p></div>
+</div>
+<div class="auth-card">
+<div class="kicker">Começar agora</div><h2>Criar conta</h2><p>Leva menos de um minuto. Preencha seus dados abaixo.</p>
+<form class="auth-form" data-register-form>
+<div class="form-field"><label for="register-name">NOME COMPLETO</label><input id="register-name" name="name" type="text" autocomplete="name" placeholder="Seu nome completo" required></div>
+<div class="form-field"><label for="register-email">E-MAIL</label><input id="register-email" name="email" type="email" autocomplete="email" placeholder="voce@email.com" required></div>
+<div class="form-field"><label for="register-password">SENHA</label><div class="password-wrap"><input id="register-password" name="password" type="password" autocomplete="new-password" placeholder="Mínimo de 6 caracteres" required><button type="button" class="password-toggle" data-toggle-password="#register-password"><i class="fa-solid fa-eye"></i></button></div></div>
+<div class="form-field"><label for="register-confirm">CONFIRMAR SENHA</label><div class="password-wrap"><input id="register-confirm" name="confirmPassword" type="password" autocomplete="new-password" placeholder="Digite novamente" required><button type="button" class="password-toggle" data-toggle-password="#register-confirm"><i class="fa-solid fa-eye"></i></button></div></div>
+<label class="check" style="font-size:.68rem;color:var(--muted)"><input type="checkbox" required> Concordo com os termos de uso.</label>
+<button class="auth-submit" type="submit">Criar minha conta <i class="fa-solid fa-arrow-right"></i></button>
+</form>
+<div class="auth-divider">já possui conta?</div>
+<div class="auth-switch"><a href="login.html">Entrar na minha conta</a></div>
+<div class="demo-note">Após o cadastro, seu perfil será criado automaticamente e você poderá editar seus dados.</div>
+</div>
+</section>
+</main>
+<footer class="site-footer"><div class="footer-inner"><div class="footer-brand"><a href="index.html" class="footer-logo"><span class="footer-logo-mark"><i class="fa-solid fa-seedling"></i></span><span>eco viva</span></a><p>Pequenas ações. Um planeta melhor.</p></div><div class="footer-links"><div><strong>Explorar</strong><a href="index.html">Visão geral</a><a href="pontuacao.html">Meu impacto</a><a href="escanear.html">Reciclar</a></div><div><strong>Conta</strong><a href="login.html">Entrar</a><a href="cadastro.html">Criar conta</a><a href="perfil.html">Perfil</a></div><div><strong>Serviços</strong><a href="resgates.html">Prêmios</a><a href="separar-lixo.html">Descarte</a></div></div></div><div class="footer-bottom"><span>© 2026 Eco Viva.</span><span>Feito para transformar hábitos em impacto.</span></div></footer>
+</div>
+<script>
+document.addEventListener("DOMContentLoaded",()=>{
+ document.querySelectorAll("[data-toggle-password]").forEach(btn=>{
+  btn.onclick=()=>{const input=document.querySelector(btn.dataset.togglePassword);input.type=input.type==="password"?"text":"password";btn.innerHTML=input.type==="password"?'<i class="fa-solid fa-eye"></i>':'<i class="fa-solid fa-eye-slash"></i>'}
+ })
+})
+</script>
+</body></html>

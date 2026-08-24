@@ -1,0 +1,111 @@
+<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="theme-color" content="#102b1c"><title>Eco Viva — Dados pessoais</title>
+<link rel="stylesheet" href="components/index.css"><link rel="stylesheet" href="components/auth.css"><link rel="stylesheet" href="components/perfil.css"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"><script src="script/app.js" defer></script><script src="script/auth.js" defer></script></head>
+<body><div class="app-wrapper"><header class="app-header"><div class="header-inner"><a href="perfil.html" class="page-brand"><span class="page-brand-icon"><i class="fa-solid fa-user-pen"></i></span><span class="page-brand-text">Dados pessoais</span></a><nav class="header-nav" aria-label="Navegação principal"><a href="index.html" class="header-pill">Visão geral</a><a href="pontuacao.html" class="header-pill">Impacto</a><a href="escanear.html" class="header-pill">Reciclar</a><a href="empresas.html" class="header-pill">Parceiros</a><a href="resgates.html" class="header-pill">Prêmios</a></nav><a href="perfil.html" class="header-profile" data-header-user aria-label="Perfil"><span class="header-user-avatar"><i class="fa-solid fa-user"></i></span></a></div></header>
+<main class="content"><a class="page-back" href="perfil.html"><i class="fa-solid fa-arrow-left"></i> Voltar para perfil</a>
+<div class="profile-section">
+<div class="profile-section-head"><div><div class="kicker">Minha conta</div><h1 class="page-title">Dados pessoais</h1><p class="page-subtitle">Atualize suas informações e escolha a foto que será exibida no header.</p></div></div>
+<form class="auth-form" id="editProfileForm">
+<div class="profile-photo-editor">
+<div class="profile-avatar-large" id="editAvatar">EV</div>
+<div><h3>Foto de perfil</h3><p>JPG ou PNG. Recomendado até 2 MB.</p><label class="btn-secondary upload-btn"><i class="fa-solid fa-camera"></i> Escolher foto<input id="photoInput" type="file" accept="image/png,image/jpeg" hidden></label><button type="button" class="text-link remove-photo" id="removePhoto">Remover foto</button></div>
+</div>
+<div class="profile-form-grid">
+<div class="form-field"><label>NOME COMPLETO</label><input name="name" id="edit-name" required></div>
+<div class="form-field"><label>E-MAIL</label><input name="email" id="edit-email" type="email" required></div>
+<div class="form-field"><label>TELEFONE</label><input name="phone" id="edit-phone" type="tel" placeholder="(00) 00000-0000"></div>
+<div class="form-field"><label>CIDADE</label><input name="city" id="edit-city" placeholder="Sua cidade"></div>
+<div class="form-field full"><label>SOBRE VOCÊ</label><textarea name="bio" id="edit-bio" placeholder="Conte um pouco sobre você."></textarea></div>
+</div>
+<button class="auth-submit" type="submit">Salvar alterações <i class="fa-solid fa-check"></i></button>
+</form>
+</div>
+</main><footer class="site-footer"><div class="footer-inner"><div class="footer-brand"><a href="index.html" class="footer-logo"><span class="footer-logo-mark"><i class="fa-solid fa-seedling"></i></span><span>eco viva</span></a><p>Pequenas ações. Um planeta melhor.</p></div><div class="footer-links"><div><strong>Explorar</strong><a href="index.html">Visão geral</a><a href="pontuacao.html">Meu impacto</a><a href="escanear.html">Reciclar</a></div><div><strong>Conta</strong><a href="perfil.html">Perfil</a><a href="login.html">Entrar</a><a href="cadastro.html">Criar conta</a></div><div><strong>Serviços</strong><a href="resgates.html">Prêmios</a><a href="separar-lixo.html">Descarte</a></div></div></div><div class="footer-bottom"><span>© 2026 Eco Viva.</span><span>Feito para transformar hábitos em impacto.</span></div></footer></div><script>
+document.addEventListener('DOMContentLoaded', async () => {
+  const result = await EcoAuth.ready;
+  if (!result.user) return;
+
+  const user = result.user;
+  const form = document.getElementById('editProfileForm');
+  const avatar = document.getElementById('editAvatar');
+  const input = document.getElementById('photoInput');
+  const removePhoto = document.getElementById('removePhoto');
+
+  form.name.value = user.name || '';
+  form.email.value = user.email || '';
+  form.phone.value = user.phone || '';
+  form.city.value = user.city || '';
+  form.bio.value = user.bio || '';
+
+  function initials() {
+    avatar.textContent = (user.name || 'Usuário')
+      .split(/\s+/).filter(Boolean).slice(0, 2)
+      .map(x => x[0]).join('').toUpperCase();
+  }
+
+  function renderAvatar() {
+    avatar.innerHTML = '';
+    if (user.avatar) {
+      const img = document.createElement('img');
+      img.src = user.avatar + '?v=' + Date.now();
+      img.alt = 'Foto de perfil';
+      avatar.appendChild(img);
+    } else {
+      initials();
+    }
+  }
+
+  renderAvatar();
+
+  input.addEventListener('change', async () => {
+    const file = input.files?.[0];
+    if (!file) return;
+    try {
+      const updated = await EcoAuth.uploadAvatar(file);
+      Object.assign(user, updated);
+      renderAvatar();
+      input.value = '';
+      EcoViva.toast('Foto atualizada e salva na sua conta.');
+    } catch (e) {
+      input.value = '';
+      EcoViva.toast(e.message, 'error');
+    }
+  });
+
+  removePhoto.addEventListener('click', async () => {
+    try {
+      const result = await EcoAuth.api('/api/profile/avatar', { method: 'DELETE' });
+      Object.assign(user, result.user);
+      renderAvatar();
+      EcoAuth.renderHeader();
+      EcoViva.toast('Foto removida.');
+    } catch (e) {
+      EcoViva.toast(e.message, 'error');
+    }
+  });
+
+  form.addEventListener('submit', async e => {
+    e.preventDefault();
+    const button = form.querySelector('button[type="submit"]');
+    const original = button.innerHTML;
+    button.disabled = true;
+    button.innerHTML = 'Salvando...';
+    try {
+      const updated = await EcoAuth.updateUser({
+        name: form.name.value,
+        email: form.email.value,
+        phone: form.phone.value,
+        city: form.city.value,
+        bio: form.bio.value
+      });
+      Object.assign(user, updated);
+      renderAvatar();
+      EcoViva.toast('Dados atualizados e salvos.');
+    } catch (e) {
+      EcoViva.toast(e.message, 'error');
+    } finally {
+      button.disabled = false;
+      button.innerHTML = original;
+    }
+  });
+});
+</script></body></html>

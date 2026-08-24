@@ -1,0 +1,38 @@
+{
+  "plastico": {
+    "pointsPerKg": 500,
+    "co2PerKg": 1.02515,
+    "waterPerKg": null,
+    "treePerKg": null,
+    "energyPerKg": 11.3134,
+    "source": "EPA WARM v16 — Mixed Plastics; energia convertida de MMBtu/short ton para kWh/kg. Água e árvores não estimadas nesta metodologia.",
+    "updatedAt": "2026-08-24T00:00:00.000Z"
+  },
+  "papel": {
+    "pointsPerKg": 400,
+    "co2PerKg": 3.91321,
+    "waterPerKg": 26.49788,
+    "treePerKg": 0.017,
+    "energyPerKg": 6.64202,
+    "source": "EPA WARM v16 — Mixed Paper (general); água e árvores: EPA Recycling Flash Facts (7.000 galões e 17 árvores por tonelada de papel). Energia convertida para kWh/kg.",
+    "updatedAt": "2026-08-24T00:00:00.000Z"
+  },
+  "vidro": {
+    "pointsPerKg": 400,
+    "co2PerKg": 0.30865,
+    "waterPerKg": null,
+    "treePerKg": null,
+    "energyPerKg": 0.68811,
+    "source": "EPA WARM v16 — Glass; energia convertida de MMBtu/short ton para kWh/kg. Água e árvores não estimadas nesta metodologia.",
+    "updatedAt": "2026-08-24T00:00:00.000Z"
+  },
+  "metal": {
+    "pointsPerKg": 500,
+    "co2PerKg": 10.0641,
+    "waterPerKg": 22.71247,
+    "treePerKg": null,
+    "energyPerKg": 49.34997,
+    "source": "EPA WARM v16 — Aluminum Cans; água: Sandia National Laboratories/OSTI, cerca de 6.000 galões por tonelada métrica de alumínio reciclado. Árvores não são um indicador aplicável para alumínio.",
+    "updatedAt": "2026-08-24T00:00:00.000Z"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "name": "eco-viva",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Eco Viva - aplicativo web de impacto sustentável",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "engines": {
+    "node": ">=20 <25"
+  },
+  "dependencies": {
+    "postgres": "^3.4.7",
+    "dotenv": "^16.6.1"
+  }
+}

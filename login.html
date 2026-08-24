@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#102b1c">
+<title>Eco Viva — Entrar</title>
+<link rel="stylesheet" href="components/index.css">
+<link rel="stylesheet" href="components/auth.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<script src="script/app.js" defer></script><script src="script/auth.js" defer></script>
+</head>
+<body>
+<div class="app-wrapper">
+<header class="app-header"><div class="header-inner">
+<a href="index.html" class="page-brand brand-main"><span class="page-brand-icon"><i class="fa-solid fa-seedling"></i></span><span class="page-brand-text">Eco Viva</span></a>
+<nav class="header-nav" aria-label="Navegação principal"><a href="index.html" class="header-pill">Visão geral</a><a href="pontuacao.html" class="header-pill">Impacto</a><a href="escanear.html" class="header-pill">Reciclar</a><a href="empresas.html" class="header-pill">Parceiros</a><a href="resgates.html" class="header-pill">Prêmios</a></nav>
+<a href="perfil.html" class="header-profile" data-header-user aria-label="Perfil"><span class="header-user-avatar"><i class="fa-solid fa-user"></i></span></a>
+</div></header>
+
+<main class="content auth-page">
+<section class="auth-layout">
+<div class="auth-showcase">
+<div><div class="auth-mark"><i class="fa-solid fa-seedling"></i></div></div>
+<div><div class="kicker">Bem-vindo de volta</div><h1>Seu impacto começa com uma ação.</h1><p>Entre na sua conta para acompanhar pontos, reciclagem, mobilidade e benefícios em um só lugar.</p></div>
+</div>
+
+<div class="auth-card">
+<div id="login-required-message" class="demo-note" style="display:none;margin-top:0;margin-bottom:18px;background:#e8f0df"><strong>Login necessário:</strong> crie uma conta ou entre para acessar os recursos do Eco Viva.</div>
+<div class="kicker">Acessar conta</div><h2>Entrar</h2><p>Use seu e-mail e senha para continuar.</p>
+<form class="auth-form" data-login-form>
+<div class="form-field"><label for="login-email">E-MAIL</label><input id="login-email" name="email" type="email" autocomplete="email" placeholder="voce@email.com" required></div>
+<div class="form-field"><label for="login-password">SENHA</label><div class="password-wrap"><input id="login-password" name="password" type="password" autocomplete="current-password" placeholder="Digite sua senha" required><button type="button" class="password-toggle" data-toggle-password="#login-password"><i class="fa-solid fa-eye"></i></button></div></div>
+<div class="form-options"><label class="check"><input type="checkbox" name="remember"> Lembrar de mim</label><a class="text-link" href="cadastro.html">Criar conta</a></div>
+<button class="auth-submit" type="submit">Entrar <i class="fa-solid fa-arrow-right"></i></button>
+</form>
+<div class="auth-divider">ou</div>
+<div class="auth-switch">Ainda não tem uma conta? <a href="cadastro.html">Cadastre-se grátis</a></div>
+<div class="demo-note"><strong>Seus dados ficam protegidos no servidor.</strong> O acesso é individual e sua conta pode ser usada em outros dispositivos.</div>
+</div>
+</section>
+</main>
+<footer class="site-footer"><div class="footer-inner"><div class="footer-brand"><a href="index.html" class="footer-logo"><span class="footer-logo-mark"><i class="fa-solid fa-seedling"></i></span><span>eco viva</span></a><p>Pequenas ações. Um planeta melhor.</p></div><div class="footer-links"><div><strong>Explorar</strong><a href="index.html">Visão geral</a><a href="pontuacao.html">Meu impacto</a><a href="escanear.html">Reciclar</a></div><div><strong>Conta</strong><a href="login.html">Entrar</a><a href="cadastro.html">Criar conta</a><a href="perfil.html">Perfil</a></div><div><strong>Serviços</strong><a href="resgates.html">Prêmios</a><a href="separar-lixo.html">Descarte</a></div></div></div><div class="footer-bottom"><span>© 2026 Eco Viva.</span><span>Feito para transformar hábitos em impacto.</span></div></footer>
+</div>
+<script>
+document.addEventListener("DOMContentLoaded",async()=>{
+ await EcoAuth.ready;
+ const params=new URLSearchParams(location.search);
+ const next=params.get("next") || "index.html";
+ if(EcoAuth.isLoggedIn()){ location.replace(next); return; }
+ if(params.get("next")){
+   const box=document.getElementById("login-required-message");
+   if(box) box.style.display="block";
+ }
+ document.querySelectorAll("[data-toggle-password]").forEach(btn=>{
+  btn.onclick=()=>{const input=document.querySelector(btn.dataset.togglePassword);input.type=input.type==="password"?"text":"password";btn.innerHTML=input.type==="password"?'<i class="fa-solid fa-eye"></i>':'<i class="fa-solid fa-eye-slash"></i>'}
+ })
+})
+</script>
+</body></html>

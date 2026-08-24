@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#102b1c"><title>Eco Viva — Perfil</title>
+<link rel="stylesheet" href="components/index.css"><link rel="stylesheet" href="components/auth.css"><link rel="stylesheet" href="components/perfil.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<script src="script/app.js" defer></script><script src="script/auth.js" defer></script>
+</head>
+<body><div class="app-wrapper">
+<header class="app-header"><div class="header-inner">
+<a href="index.html" class="page-brand"><span class="page-brand-icon"><i class="fa-solid fa-user"></i></span><span class="page-brand-text">Perfil</span></a>
+<nav class="header-nav" aria-label="Navegação principal"><a href="index.html" class="header-pill">Visão geral</a><a href="pontuacao.html" class="header-pill">Impacto</a><a href="escanear.html" class="header-pill">Reciclar</a><a href="empresas.html" class="header-pill">Parceiros</a><a href="resgates.html" class="header-pill">Prêmios</a></nav>
+<a href="perfil.html" class="header-profile" data-header-user aria-label="Perfil"><span class="header-user-avatar"><i class="fa-solid fa-user"></i></span></a>
+</div></header>
+<main class="content">
+<a class="page-back" href="index.html"><i class="fa-solid fa-arrow-left"></i> Voltar para início</a>
+<div class="profile-main">
+<section class="profile-hero">
+<div class="profile-avatar-large" id="avatarInitials">EV</div>
+<h1 data-auth-name>Usuário</h1><p data-auth-email>Entre na sua conta</p>
+<span class="profile-level">Nível <span data-level>1</span></span>
+</section>
+<section class="profile-content">
+<div class="profile-section">
+<div class="profile-section-head"><div><div class="kicker">Minha conta</div><h2>Gerencie seu perfil</h2></div><p>Escolha uma área</p></div>
+<div class="profile-actions">
+<a class="profile-action" href="editar-perfil.html"><i class="fa-solid fa-user-pen"></i><span><strong>Dados pessoais</strong><small>Nome, foto, telefone e cidade</small></span></a>
+<a class="profile-action" href="seguranca.html"><i class="fa-solid fa-shield-halved"></i><span><strong>Segurança</strong><small>Senha e acesso da conta</small></span></a><a class="profile-action" href="endereco.html"><i class="fa-solid fa-location-dot"></i><span><strong>Endereço</strong><small>Cadastre o endereço para benefícios</small></span></a>
+<a class="profile-action" href="preferencias.html"><i class="fa-solid fa-sliders"></i><span><strong>Preferências</strong><small>Configurações da experiência</small></span></a>
+<a class="profile-action" href="pontuacao.html"><i class="fa-solid fa-leaf"></i><span><strong>Meu impacto</strong><small>Veja seus pontos e progresso</small></span></a>
+</div>
+</div>
+<div class="profile-section">
+<div class="profile-section-head"><div><div class="kicker">Sua jornada</div><h2>Ações rápidas</h2></div></div>
+<div class="profile-actions">
+<a class="profile-action" href="resgates.html"><i class="fa-solid fa-gift"></i><span><strong>Meus prêmios</strong><small>Troque seus pontos</small></span></a>
+<a class="profile-action" href="escanear.html"><i class="fa-solid fa-camera"></i><span><strong>Registrar reciclagem</strong><small>Ganhe novos pontos</small></span></a>
+</div>
+</div>
+<div class="profile-section"><a class="profile-action danger-action" href="#" id="logoutBtn"><i class="fa-solid fa-arrow-right-from-bracket"></i><span><strong>Sair da conta</strong><small>Encerrar sessão neste navegador</small></span></a></div>
+</section>
+</div>
+</main>
+<footer class="site-footer"><div class="footer-inner"><div class="footer-brand"><a href="index.html" class="footer-logo"><span class="footer-logo-mark"><i class="fa-solid fa-seedling"></i></span><span>eco viva</span></a><p>Pequenas ações. Um planeta melhor.</p></div><div class="footer-links"><div><strong>Explorar</strong><a href="index.html">Visão geral</a><a href="pontuacao.html">Meu impacto</a><a href="escanear.html">Reciclar</a></div><div><strong>Conta</strong><a href="perfil.html">Perfil</a><a href="login.html">Entrar</a><a href="cadastro.html">Criar conta</a></div><div><strong>Serviços</strong><a href="resgates.html">Prêmios</a><a href="separar-lixo.html">Descarte</a></div></div></div><div class="footer-bottom"><span>© 2026 Eco Viva.</span><span>Feito para transformar hábitos em impacto.</span></div></footer>
+</div>
+<script>
+document.addEventListener("DOMContentLoaded",async()=>{
+  const session=await EcoAuth.ready;
+  if(!session.user) return;
+  const user=session.user;
+  const initials=(user.name||"EV").split(/\s+/).filter(Boolean).slice(0,2).map(x=>x[0].toUpperCase()).join("");
+  const avatar=document.getElementById("avatarInitials");
+  avatar.innerHTML=user.avatar?'<img src="'+user.avatar+'" alt="Sua foto">':initials;
+  document.querySelector('[data-auth-name]').textContent=user.name;
+  document.querySelector('[data-auth-email]').textContent=user.email;
+  document.querySelector('[data-level]').textContent=String(session.stats?.level||1);
+  document.getElementById("logoutBtn").onclick=e=>{e.preventDefault();EcoAuth.logout()};
+});
+</script>
+</body></html>

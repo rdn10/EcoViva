@@ -1,0 +1,72 @@
+<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><meta name="theme-color" content="#102b1c"><title>Eco Viva — Endereço</title><link rel="stylesheet" href="components/index.css"><link rel="stylesheet" href="components/auth.css"><link rel="stylesheet" href="components/perfil.css"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"><script src="script/app.js" defer></script><script src="script/auth.js" defer></script></head><body><div class="app-wrapper"><header class="app-header"><div class="header-inner"><a href="perfil.html" class="page-brand"><span class="page-brand-icon"><i class="fa-solid fa-location-dot"></i></span><span class="page-brand-text">Endereço</span></a><nav class="header-nav"><a class="header-pill" href="index.html">Visão geral</a><a class="header-pill" href="pontuacao.html">Impacto</a><a class="header-pill" href="escanear.html">Reciclar</a><a class="header-pill" href="empresas.html">Parceiros</a><a class="header-pill" href="resgates.html">Prêmios</a></nav><a href="perfil.html" class="header-profile" data-header-user aria-label="Perfil"><span class="header-user-avatar"><i class="fa-solid fa-user"></i></span></a></div></header><main class="content"><a class="page-back" href="perfil.html"><i class="fa-solid fa-arrow-left"></i> Voltar para perfil</a><section class="address-card"><div class="kicker">Dados de entrega</div><h1 class="page-title">Seu endereço</h1><p class="page-subtitle">Mantenha seu endereço completo. Os cupons são digitais; o endereço fica vinculado à sua conta para benefícios que exigirem entrega física no futuro.</p><div class="address-help"><strong>Privacidade:</strong> seu endereço não aparece publicamente na área de parceiros.</div><form class="auth-form" id="addressForm"><div class="address-grid"><div class="form-field"><label>CEP</label><input name="cep" id="cep" inputmode="numeric" maxlength="9" placeholder="00000-000" required></div><div class="form-field wide"><label>RUA / AVENIDA</label><input name="street" id="street" required></div><div class="form-field"><label>NÚMERO</label><input name="number" id="number" required></div><div class="form-field"><label>COMPLEMENTO</label><input name="complement" id="complement" placeholder="Apto, casa..."></div><div class="form-field"><label>BAIRRO</label><input name="neighborhood" id="neighborhood" required></div><div class="form-field"><label>CIDADE</label><input name="city" id="city" required></div><div class="form-field"><label>UF</label><input name="state" id="state" maxlength="2" required></div></div><button class="auth-submit" type="submit">Salvar endereço <i class="fa-solid fa-check"></i></button></form></section></main><footer class="site-footer"><div class="footer-inner"><div class="footer-brand"><a href="index.html" class="footer-logo"><span class="footer-logo-mark"><i class="fa-solid fa-seedling"></i></span><span>eco viva</span></a><p>Pequenas ações. Um planeta melhor.</p></div><div class="footer-links"><div><strong>Explorar</strong><a href="index.html">Visão geral</a><a href="pontuacao.html">Meu impacto</a><a href="escanear.html">Reciclar</a></div><div><strong>Conta</strong><a href="perfil.html">Perfil</a><a href="endereco.html">Endereço</a><a href="login.html">Entrar</a></div><div><strong>Serviços</strong><a href="empresas.html">Parceiros</a><a href="resgates.html">Prêmios</a><a href="separar-lixo.html">Descarte</a></div></div></div><div class="footer-bottom"><span>© 2026 Eco Viva.</span><span>Feito para transformar hábitos em impacto.</span></div></footer></div><script>
+document.addEventListener('DOMContentLoaded', async () => {
+  const result = await EcoAuth.ready;
+  if (!result.user) return;
+
+  const form = document.getElementById('addressForm');
+  const address = result.user.address || {};
+  ['cep','street','number','complement','neighborhood','city','state'].forEach(k => {
+    form[k].value = address[k] || '';
+  });
+
+  form.cep.addEventListener('input', () => {
+    const value = form.cep.value.replace(/\D/g, '').slice(0, 8);
+    form.cep.value = value.length > 5 ? value.slice(0, 5) + '-' + value.slice(5) : value;
+  });
+
+  form.cep.addEventListener('blur', async () => {
+    const value = form.cep.value.replace(/\D/g, '');
+    if (value.length !== 8) return;
+    try {
+      const response = await fetch('https://viacep.com.br/ws/' + value + '/json/');
+      const data = await response.json();
+      if (data.erro) {
+        EcoViva.toast('CEP não encontrado.', 'error');
+        return;
+      }
+      form.street.value = data.logradouro || '';
+      form.neighborhood.value = data.bairro || '';
+      form.city.value = data.localidade || '';
+      form.state.value = data.uf || '';
+    } catch {
+      EcoViva.toast('Não foi possível consultar o CEP agora.', 'error');
+    }
+  });
+
+  form.addEventListener('submit', async e => {
+    e.preventDefault();
+    const button = form.querySelector('button[type="submit"]');
+    const original = button.innerHTML;
+    button.disabled = true;
+    button.innerHTML = 'Salvando...';
+    try {
+      const saved = await EcoAuth.api('/api/profile/address', {
+        method: 'PATCH',
+        body: JSON.stringify({
+          cep: form.cep.value,
+          street: form.street.value,
+          number: form.number.value,
+          complement: form.complement.value,
+          neighborhood: form.neighborhood.value,
+          city: form.city.value,
+          state: form.state.value
+        })
+      });
+      // Mantém a sessão local sincronizada com o endereço salvo no servidor.
+      if (saved.user) {
+        const fresh = await EcoAuth.me(true);
+        if (fresh.user) {
+          EcoAuth.renderHeader();
+        }
+      }
+      EcoViva.toast('Endereço salvo com sucesso.');
+      setTimeout(() => { location.href = 'perfil.html'; }, 600);
+    } catch (e) {
+      EcoViva.toast(e.message, 'error');
+    } finally {
+      button.disabled = false;
+      button.innerHTML = original;
+    }
+  });
+});
+</script></body></html>

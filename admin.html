@@ -1,0 +1,40 @@
+<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><meta name="theme-color" content="#102b1c"><title>Eco Viva — Dashboard</title><link rel="stylesheet" href="components/admin.css"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"><script src="script/admin.js" defer></script></head><body class="admin-page"><main id="adminDashboard" class="admin-wrap"><header class="admin-top"><a class="admin-brand" href="admin.html"><div class="admin-brand-mark"><i class="fa-solid fa-leaf"></i></div><div><strong>Eco Viva Admin</strong><span>Olá, <b id="adminName">Administrador</b></span></div></a><div class="admin-actions"><a class="admin-btn secondary" href="index.html">Ver site</a><button id="logout" class="admin-btn danger">Sair</button></div></header>
+<section class="admin-hero">
+  <div class="admin-hero-content">
+    <div class="kicker">Painel de controle</div>
+    <h1>O que está acontecendo no Eco Viva?</h1>
+    <p>Acompanhe somente os dados registrados pelos usuários e gerencie parceiros e ofertas reais. Nenhuma métrica é preenchida artificialmente.</p>
+    <span class="admin-live"><i class="fa-solid fa-circle-check"></i> Dados do servidor</span>
+  </div>
+</section>
+<section class="admin-grid" aria-label="Indicadores do Eco Viva">
+<article class="admin-stat"><small>Usuários</small><strong data-stat="users">0</strong><span>contas cadastradas</span></article>
+<article class="admin-stat"><small>Reciclagens</small><strong data-stat="scans">0</strong><span>registros realizados</span></article>
+<article class="admin-stat"><small>Pontos gerados</small><strong data-stat="pointsIssued">0</strong><span>pontos distribuídos</span></article>
+<article class="admin-stat"><small>Pontos usados</small><strong data-stat="pointsSpent">0</strong><span>em resgates</span></article>
+<article class="admin-stat"><small>Resgates</small><strong data-stat="redemptions">0</strong><span>cupons resgatados</span></article>
+<article class="admin-stat"><small>Parceiros</small><strong data-stat="partners">0</strong><span>empresas cadastradas</span></article>
+<article class="admin-stat"><small>Cupons ativos</small><strong data-stat="activeCoupons">0</strong><span>ofertas disponíveis</span></article>
+<article class="admin-stat"><small>Usuários com endereço</small><strong data-stat="usersWithAddress">0</strong><span>endereços completos</span></article>
+</section>
+<section class="admin-section"><div class="admin-section-head"><div><div class="admin-section-badge"><i class="fa-solid fa-scale-balanced"></i> Metodologia</div><h2>Fatores ambientais por material</h2><p>O administrador não cadastra produtos. Ele apenas configura os fatores e a fonte. O usuário cadastra a própria embalagem.</p></div></div><form id="factorForm" class="admin-form"><div class="admin-field"><label>MATERIAL</label><select name="material" required><option value="">Selecione...</option><option value="plastico">Plástico</option><option value="papel">Papel</option><option value="vidro">Vidro</option><option value="metal">Metal</option><option value="outro">Outro</option></select></div><div class="admin-field"><label>PONTOS POR KG</label><input name="pointsPerKg" type="number" min="0" step="0.01" required></div><div class="admin-field"><label>CO₂ POR KG (kg)</label><input name="co2PerKg" type="number" min="0" step="0.0001" required></div><div class="admin-field"><label>ÁGUA POR KG (L)</label><input name="waterPerKg" type="number" min="0" step="0.01" required></div><div class="admin-field"><label>ÁRVORE EQUIVALENTE POR KG</label><input name="treePerKg" type="number" min="0" step="0.0001"><small>Deixe vazio quando a fonte não fornecer esse indicador.</small></div><div class="admin-field"><label>ENERGIA POR KG (kWh)</label><input name="energyPerKg" type="number" min="0" step="0.0001"><small>Energia economizada por kg reciclado.</small></div><div class="admin-field full"><label>FONTE</label><input name="source" required placeholder="Estudo/metodologia utilizada"></div><div class="mini-actions"><button class="admin-btn" type="submit">Salvar fatores</button><button id="factorCancel" class="admin-btn secondary" type="button">Limpar</button></div></form><div id="factorList" class="admin-list"></div></section><section class="admin-section"><div class="admin-section-head"><div><div class="admin-section-badge"><i class="fa-solid fa-building"></i> Catálogo</div><h2>Parceiros</h2><p>Cadastre somente empresas com parceria real com o Eco Viva.</p></div></div>
+<form id="partnerForm" class="admin-form">
+<div class="admin-field"><label>NOME DA EMPRESA</label><input name="name" required placeholder="Nome da empresa"></div>
+<div class="admin-field"><label>CATEGORIA</label><input name="category" required placeholder="Reciclagem, energia, transporte..."></div>
+<div class="admin-field full"><label>DESCRIÇÃO</label><textarea name="description" required placeholder="Como a empresa participa do Eco Viva?"></textarea></div>
+<div class="admin-field"><label>BENEFÍCIO</label><input name="benefit" placeholder="Benefício oferecido"></div>
+<div class="admin-field"><label>SITE</label><input name="website" type="url" placeholder="https://..."></div>
+<div class="mini-actions full"><button id="partnerSubmit" class="admin-btn" type="submit">Cadastrar parceiro</button><button id="partnerCancel" class="admin-btn secondary" type="button">Limpar</button></div>
+</form><div id="partnerList" class="admin-list"></div></section>
+<section class="admin-section"><div class="admin-section-head"><div><div class="admin-section-badge"><i class="fa-solid fa-ticket-simple"></i> Ofertas</div><h2>Cupons</h2><p>O código abaixo será exatamente o código entregue ao usuário no resgate.</p></div></div>
+<form id="couponForm" class="admin-form">
+<div class="admin-field"><label>PARCEIRO</label><select name="partnerId" id="couponPartner" required><option value="">Selecione...</option></select></div>
+<div class="admin-field"><label>TÍTULO</label><input name="title" required placeholder="Ex.: 10% de desconto"></div>
+<div class="admin-field"><label>DESCONTO / BENEFÍCIO</label><input name="discount" required placeholder="Ex.: 10% OFF"></div>
+<div class="admin-field"><label>CÓDIGO DO CUPOM</label><input name="code" required maxlength="80" placeholder="Ex.: ECO10"></div>
+<div class="admin-field full"><label>DESCRIÇÃO / REGRAS</label><textarea name="description" required placeholder="Regras de uso do cupom..."></textarea></div>
+<div class="admin-field"><label>CUSTO EM PONTOS</label><input name="pointsCost" type="number" min="1" step="1" required placeholder="500"></div>
+<div class="admin-field"><label>VALIDADE</label><input name="validUntil" type="date"></div>
+<div class="mini-actions full"><button id="couponSubmit" class="admin-btn" type="submit">Cadastrar cupom</button><button id="couponCancel" class="admin-btn secondary" type="button">Limpar</button></div>
+</form><div id="couponList" class="admin-list"></div></section>
+</main></body></html>

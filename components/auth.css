@@ -1,0 +1,619 @@
+
+/* Eco Viva — Login / Cadastro / Perfil */
+.auth-page{
+  min-height:calc(100vh - 82px);
+  display:grid;
+  place-items:center;
+  padding:45px 0 70px;
+}
+.auth-layout{
+  width:min(100%,1050px);
+  display:grid;
+  grid-template-columns:1fr .9fr;
+  gap:18px;
+  align-items:stretch;
+}
+.auth-showcase{
+  min-height:610px;
+  border-radius:32px;
+  padding:34px;
+  color:white;
+  background:
+    linear-gradient(145deg,rgba(16,43,28,.9),rgba(16,43,28,.28)),
+    url('https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=1100&q=85');
+  background-size:cover;
+  background-position:center;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  overflow:hidden;
+}
+.auth-showcase .kicker{color:#dfead0}
+.auth-showcase h1{
+  font-family:var(--display);
+  font-size:clamp(2.7rem,5vw,5rem);
+  line-height:.93;
+  letter-spacing:-.075em;
+  max-width:520px;
+}
+.auth-showcase p{
+  max-width:400px;
+  color:rgba(255,255,255,.72);
+  font-size:.82rem;
+  line-height:1.6;
+  margin-top:15px;
+}
+.auth-mark{
+  width:50px;height:50px;border-radius:17px;
+  display:grid;place-items:center;
+  background:#dfead0;color:var(--forest);
+  font-size:1.1rem;
+}
+.auth-card{
+  background:white;
+  border:1px solid var(--line);
+  border-radius:32px;
+  padding:38px;
+  box-shadow:var(--shadow);
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+}
+.auth-card h2{
+  font-family:var(--display);
+  font-size:clamp(1.8rem,4vw,2.5rem);
+  letter-spacing:-.06em;
+  margin-bottom:8px;
+}
+.auth-card > p{
+  color:var(--muted);
+  font-size:.78rem;
+  line-height:1.55;
+  margin-bottom:25px;
+}
+.auth-form{
+  display:flex;
+  flex-direction:column;
+  gap:15px;
+}
+.form-field{
+  display:flex;
+  flex-direction:column;
+  gap:7px;
+}
+.form-field label{
+  font-size:.67rem;
+  font-weight:800;
+  color:#4f5a51;
+}
+.form-field input,
+.form-field textarea,
+.form-field select{
+  width:100%;
+  border:1px solid #dfe4de;
+  background:#f8f9f7;
+  color:var(--ink);
+  border-radius:14px;
+  padding:13px 14px;
+  outline:none;
+  font:inherit;
+  font-size:.8rem;
+  transition:.2s;
+}
+.form-field textarea{min-height:100px;resize:vertical}
+.form-field input:focus,
+.form-field textarea:focus,
+.form-field select:focus{
+  border-color:var(--forest-2);
+  background:white;
+  box-shadow:0 0 0 4px rgba(94,125,82,.1);
+}
+.password-wrap{position:relative}
+.password-wrap input{padding-right:45px}
+.password-toggle{
+  position:absolute;
+  right:8px;
+  top:50%;
+  transform:translateY(-50%);
+  width:34px;height:34px;
+  border:0;background:transparent;color:var(--muted);
+  cursor:pointer;border-radius:9px;
+}
+.form-options{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  font-size:.67rem;
+  color:var(--muted);
+}
+.check{
+  display:flex;align-items:center;gap:7px;
+}
+.check input{accent-color:var(--forest)}
+.text-link{
+  color:var(--forest);
+  font-weight:800;
+  text-decoration:none;
+}
+.auth-submit{
+  width:100%;
+  min-height:47px;
+  border:0;
+  border-radius:999px;
+  background:var(--forest);
+  color:white;
+  font:inherit;
+  font-size:.78rem;
+  font-weight:800;
+  cursor:pointer;
+  transition:.2s;
+}
+.auth-submit:hover{background:#0b0e0c;transform:translateY(-1px)}
+.auth-divider{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  color:#a0a8a1;
+  font-size:.62rem;
+  margin:21px 0;
+}
+.auth-divider:before,.auth-divider:after{
+  content:"";height:1px;background:var(--line);flex:1;
+}
+.auth-switch{
+  text-align:center;
+  color:var(--muted);
+  font-size:.72rem;
+}
+.auth-switch a{
+  color:var(--forest);
+  font-weight:800;
+  text-decoration:none;
+}
+.demo-note{
+  margin-top:16px;
+  padding:12px 14px;
+  border-radius:13px;
+  background:var(--lime);
+  color:var(--forest);
+  font-size:.65rem;
+  line-height:1.5;
+}
+
+/* Perfil */
+.profile-main{
+  display:grid;
+  grid-template-columns:310px 1fr;
+  gap:18px;
+}
+.profile-hero{
+  background:var(--forest);
+  color:white;
+  border-radius:30px;
+  padding:30px 24px;
+  text-align:center;
+  position:relative;
+  overflow:hidden;
+}
+.profile-hero:after{
+  content:"";
+  position:absolute;
+  width:220px;height:220px;
+  border-radius:50%;
+  right:-100px;top:-100px;
+  background:rgba(255,255,255,.07);
+}
+.profile-avatar-large{
+  width:100px;height:100px;
+  margin:0 auto 16px;
+  border-radius:50%;
+  background:#dfead0;
+  color:var(--forest);
+  display:grid;
+  place-items:center;
+  font-family:var(--display);
+  font-size:2rem;
+  font-weight:800;
+  position:relative;
+  z-index:1;
+}
+.profile-hero h1{
+  font-family:var(--display);
+  font-size:1.5rem;
+  letter-spacing:-.05em;
+  position:relative;z-index:1;
+}
+.profile-hero p{
+  color:rgba(255,255,255,.62);
+  font-size:.72rem;
+  margin-top:5px;
+  position:relative;z-index:1;
+}
+.profile-level{
+  display:inline-flex;
+  margin-top:15px;
+  padding:7px 11px;
+  border-radius:99px;
+  background:rgba(255,255,255,.1);
+  color:#dfead0;
+  font-size:.62rem;
+  font-weight:800;
+  position:relative;z-index:1;
+}
+.profile-content{
+  display:flex;
+  flex-direction:column;
+  gap:14px;
+}
+.profile-section{
+  background:white;
+  border:1px solid var(--line);
+  border-radius:26px;
+  padding:24px;
+}
+.profile-section-head{
+  display:flex;
+  align-items:end;
+  justify-content:space-between;
+  gap:15px;
+  margin-bottom:20px;
+}
+.profile-section h2{
+  font-family:var(--display);
+  font-size:1.35rem;
+  letter-spacing:-.05em;
+}
+.profile-section-head p{
+  color:var(--muted);
+  font-size:.7rem;
+}
+.profile-form-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:14px;
+}
+.profile-form-grid .full{grid-column:1 / -1}
+.profile-actions{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:10px;
+}
+.profile-action{
+  min-height:48px;
+  display:flex;
+  align-items:center;
+  gap:9px;
+  padding:13px 15px;
+  border:1px solid var(--line);
+  border-radius:15px;
+  background:#f8f9f7;
+  color:var(--forest);
+  text-decoration:none;
+  font-size:.72rem;
+  font-weight:800;
+}
+.profile-action:hover{background:var(--lime)}
+.profile-action i{font-size:.85rem}
+.danger-action{color:#9b3434;background:#fff8f8}
+
+@media(max-width:850px){
+  .auth-layout{grid-template-columns:1fr}
+  .auth-showcase{min-height:310px}
+  .profile-main{grid-template-columns:1fr}
+}
+@media(max-width:700px){
+  .auth-page{padding:25px 0 50px;min-height:calc(100vh - 88px)}
+  .auth-showcase{min-height:250px;border-radius:24px;padding:24px}
+  .auth-showcase h1{font-size:2.65rem}
+  .auth-card{border-radius:24px;padding:24px 19px}
+  .profile-main{grid-template-columns:1fr}
+  .profile-hero{border-radius:24px;padding:25px 20px}
+  .profile-section{border-radius:22px;padding:19px}
+  .profile-form-grid{grid-template-columns:1fr;gap:12px}
+  .profile-form-grid .full{grid-column:auto}
+  .profile-actions{grid-template-columns:1fr}
+}
+
+/* Usuário logado no header */
+.header-profile{
+  width:auto!important;
+  min-width:38px;
+  height:42px!important;
+  padding:3px 8px 3px 3px;
+  border-radius:999px!important;
+  display:flex!important;
+  align-items:center;
+  justify-content:center;
+  gap:7px;
+  text-decoration:none;
+  background:#e9ece7!important;
+  color:var(--forest)!important;
+  box-shadow:none!important;
+}
+.header-user-avatar{
+  width:34px;height:34px;flex:0 0 34px;
+  border-radius:50%;object-fit:cover;
+  display:grid;place-items:center;
+  background:var(--forest);color:#dfead0;
+  font-family:var(--display);font-size:.72rem;font-weight:800;
+}
+.header-user-name{
+  max-width:100px;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+  font-size:.67rem;font-weight:800;
+}
+.header-user-login{font-size:.67rem;font-weight:800;padding:0 5px}
+.header-profile:hover{background:var(--lime)!important}
+@media(max-width:700px){
+  .header-profile{
+    height:36px!important;
+    min-width:36px;
+    width:auto!important;
+    padding:2px;
+    gap:0;
+    background:transparent!important;
+  }
+  .header-user-name,.header-user-login{display:none}
+  .header-user-avatar{width:32px;height:32px;flex-basis:32px}
+}
+
+
+/* ==========================================================
+   ECO VIVA — HEADER DO USUÁRIO / FOTO + NOME
+   Regra final: foto e nome aparecem juntos quando logado.
+   ========================================================== */
+
+.header-profile[data-header-user]{
+  width:auto!important;
+  min-width:0!important;
+  height:44px!important;
+  min-height:44px!important;
+  padding:3px 11px 3px 4px!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:8px!important;
+  border-radius:999px!important;
+  background:#e9ece7!important;
+  color:var(--forest)!important;
+  box-shadow:none!important;
+  overflow:hidden;
+}
+
+.header-user-avatar{
+  width:36px!important;
+  height:36px!important;
+  min-width:36px!important;
+  flex:0 0 36px!important;
+  border-radius:50%!important;
+  overflow:hidden!important;
+  display:grid!important;
+  place-items:center!important;
+  background:var(--forest)!important;
+  color:#dfead0!important;
+  font-family:var(--display)!important;
+  font-size:.72rem!important;
+  font-weight:800!important;
+  line-height:1!important;
+}
+
+.header-user-photo{
+  background:#fff!important;
+  border:2px solid #fff!important;
+  box-shadow:0 0 0 1px rgba(16,43,28,.12)!important;
+}
+
+.header-user-photo img{
+  display:block!important;
+  width:100%!important;
+  height:100%!important;
+  min-width:100%!important;
+  min-height:100%!important;
+  object-fit:cover!important;
+  object-position:center!important;
+  border-radius:50%!important;
+  transform:scale(1.08);
+}
+
+.header-user-initials{
+  background:var(--forest)!important;
+  color:#dfead0!important;
+}
+
+.header-user-name{
+  display:block!important;
+  max-width:110px!important;
+  overflow:hidden!important;
+  text-overflow:ellipsis!important;
+  white-space:nowrap!important;
+  font-family:var(--display)!important;
+  font-size:.68rem!important;
+  font-weight:800!important;
+  line-height:1!important;
+}
+
+.header-user-login{
+  display:block!important;
+  max-width:90px!important;
+  overflow:hidden!important;
+  text-overflow:ellipsis!important;
+  white-space:nowrap!important;
+  font-family:var(--display)!important;
+  font-size:.68rem!important;
+  font-weight:800!important;
+}
+
+.header-profile[data-header-user]:hover{
+  background:var(--lime)!important;
+}
+
+/* Mobile: mantém foto + primeiro nome, sem ocupar a tela toda. */
+@media(max-width:700px){
+  .header-profile[data-header-user]{
+    width:auto!important;
+    min-width:0!important;
+    height:36px!important;
+    min-height:36px!important;
+    padding:2px 8px 2px 3px!important;
+    gap:6px!important;
+  }
+
+  .header-user-avatar{
+    width:30px!important;
+    height:30px!important;
+    min-width:30px!important;
+    flex-basis:30px!important;
+  }
+
+  .header-user-name,
+  .header-user-login{
+    display:block!important;
+    max-width:78px!important;
+    font-size:.6rem!important;
+  }
+}
+
+@media(max-width:380px){
+  .header-user-name,
+  .header-user-login{
+    max-width:62px!important;
+    font-size:.57rem!important;
+  }
+
+  .header-profile[data-header-user]{
+    padding-right:6px!important;
+  }
+}
+
+
+.profile-avatar-large{
+  overflow:hidden!important;
+}
+.profile-avatar-large img{
+  display:block!important;
+  width:100%!important;
+  height:100%!important;
+  object-fit:cover!important;
+  object-position:center!important;
+  border-radius:50%!important;
+}
+
+
+/* ==========================================================
+   CORREÇÃO DEFINITIVA — HEADER MOBILE FOTO + NOME
+   O segundo bloco do grid usa o tamanho real do usuário,
+   não uma coluna fixa de 36px.
+   ========================================================== */
+
+@media(max-width:700px){
+  .header-inner{
+    grid-template-columns:minmax(0,1fr) max-content!important;
+    grid-template-areas:
+      "brand profile"
+      "nav nav";
+  }
+
+  .header-profile[data-header-user]{
+    width:max-content!important;
+    max-width:125px!important;
+    min-width:0!important;
+    overflow:visible!important;
+    justify-self:end!important;
+    flex-shrink:0!important;
+  }
+
+  .header-user-name{
+    display:block!important;
+    visibility:visible!important;
+    opacity:1!important;
+    width:auto!important;
+    max-width:78px!important;
+    min-width:0!important;
+    overflow:hidden!important;
+    text-overflow:ellipsis!important;
+    white-space:nowrap!important;
+  }
+
+  .header-user-avatar{
+    display:grid!important;
+    visibility:visible!important;
+    opacity:1!important;
+  }
+}
+
+@media(max-width:380px){
+  .header-profile[data-header-user]{
+    max-width:112px!important;
+  }
+
+  .header-user-name{
+    max-width:64px!important;
+    font-size:.57rem!important;
+  }
+}
+
+
+/* ==========================================================
+   ECO VIVA — HEADER RESPONSIVO FINAL
+   Foto + nome funcionam em desktop, tablet e mobile.
+   ========================================================== */
+.app-header{width:100%}
+.header-inner{width:min(1180px,100%);min-width:0}
+.header-profile[data-header-user]{
+  width:auto;min-width:0;max-width:180px;height:44px;min-height:44px;
+  padding:3px 12px 3px 4px;display:flex;align-items:center;
+  justify-content:flex-start;gap:8px;flex:0 1 auto;overflow:hidden;box-sizing:border-box;
+}
+.header-user-avatar{
+  width:36px;height:36px;min-width:36px;flex:0 0 36px;
+  display:grid;place-items:center;overflow:hidden;border-radius:50%;box-sizing:border-box;
+}
+.header-user-photo{background:#fff;border:2px solid #fff;box-shadow:0 0 0 1px rgba(16,43,28,.12)}
+.header-user-photo img{
+  display:block;width:100%;height:100%;object-fit:cover;object-position:center;border-radius:50%;
+}
+.header-user-name,.header-user-login{
+  display:block;min-width:0;max-width:112px;overflow:hidden;text-overflow:ellipsis;
+  white-space:nowrap;line-height:1;font-family:var(--display);font-size:.68rem;font-weight:800;
+}
+@media (max-width:900px) and (min-width:701px){
+  .header-inner{gap:14px}
+  .header-profile[data-header-user]{max-width:145px;height:42px;min-height:42px;padding-right:9px}
+  .header-user-avatar{width:34px;height:34px;min-width:34px;flex-basis:34px}
+  .header-user-name,.header-user-login{max-width:82px;font-size:.64rem}
+}
+@media (max-width:700px){
+  .app-header{height:auto;min-height:88px;padding:7px 12px 6px}
+  .header-inner{
+    width:100%;height:auto;min-height:75px;
+    display:grid;grid-template-columns:minmax(0,1fr) max-content;
+    grid-template-rows:39px 31px;grid-template-areas:"brand profile" "nav nav";
+    align-items:center;gap:4px 8px;
+  }
+  .page-brand{grid-area:brand;min-width:0;max-width:100%}
+  .header-profile[data-header-user]{
+    grid-area:profile;width:auto;max-width:125px;min-width:0;
+    height:35px;min-height:35px;padding:2px 8px 2px 3px;gap:6px;
+    justify-self:end;overflow:hidden;
+  }
+  .header-user-avatar{width:29px;height:29px;min-width:29px;flex-basis:29px}
+  .header-user-name,.header-user-login{display:block;max-width:72px;font-size:.59rem}
+  .header-nav{
+    grid-area:nav;width:100%;min-width:0;height:31px;display:flex;align-items:center;
+    justify-content:flex-start;gap:6px;overflow-x:auto;overflow-y:hidden;
+    padding:0 1px 1px;margin:0;scrollbar-width:none;-webkit-overflow-scrolling:touch;
+  }
+  .header-nav::-webkit-scrollbar{display:none}
+  .header-pill{
+    flex:0 0 auto;height:29px;display:inline-flex;align-items:center;justify-content:center;
+    padding:0 12px;font-size:.59rem;
+  }
+}
+@media (max-width:390px){
+  .app-header{padding-left:9px;padding-right:9px}
+  .header-profile[data-header-user]{max-width:108px;padding-right:6px}
+  .header-user-avatar{width:28px;height:28px;min-width:28px;flex-basis:28px}
+  .header-user-name,.header-user-login{max-width:59px;font-size:.56rem}
+  .header-pill{padding-left:10px;padding-right:10px;font-size:.56rem}
+}

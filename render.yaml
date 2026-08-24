@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: ecoviva
+    runtime: node
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: DATABASE_SSL
+        value: require
+      - key: DATABASE_URL
+        sync: false
+      - key: ADMIN_SETUP_KEY
+        generateValue: true
